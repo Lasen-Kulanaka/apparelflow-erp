@@ -1,14 +1,27 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./AuthContext";
+import Layout from "./components/Layout";
+import RequireRole from "./components/RequireRole";
+import Login from "./pages/Login";
+import Placeholder from "./pages/Placeholder";
 
 export default function App() {
-  const [status, setStatus] = useState("checking...");
-
-  useEffect(() => {
-    fetch("/api/health")
-      .then((res) => res.json())
-      .then((data) => setStatus(data.status))
-      .catch(() => setStatus("API unreachable"));
-  }, []);
-
-  return <h1>ApparelFlow API status: {status}</h1>;
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route element={<Layout />}>
+            <Route path="/orders" element={
+              <RequireRole roles={["cutting_supervisor"]}><Placeholder title="Cutting Orders" /></RequireRole>} />
+            <Route path="/verify" element={
+              <RequireRole roles={["cutting_verifier"]}><Placeholder title="Verification Terminal" /></RequireRole>} />
+            <Route path="/sewing" element={
+              <RequireRole roles={["sewing_supervisor"]}><Placeholder title="Sewing Queue" /></RequireRole>} />
+          </Route>
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
