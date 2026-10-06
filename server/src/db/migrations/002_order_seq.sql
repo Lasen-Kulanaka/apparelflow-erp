@@ -1,0 +1,1 @@
+CREATE SEQUENCE order_no_seq START 1001;
