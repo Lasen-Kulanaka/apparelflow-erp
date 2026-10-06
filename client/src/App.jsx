@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import RequireRole from "./components/RequireRole";
 import Login from "./pages/Login";
 import Placeholder from "./pages/Placeholder";
+import Orders from "./pages/Orders";
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route element={<Layout />}>
             <Route path="/orders" element={
-              <RequireRole roles={["cutting_supervisor"]}><Placeholder title="Cutting Orders" /></RequireRole>} />
+              <RequireRole roles={["cutting_supervisor"]}><Orders /></RequireRole>} />
             <Route path="/verify" element={
               <RequireRole roles={["cutting_verifier"]}><Placeholder title="Verification Terminal" /></RequireRole>} />
             <Route path="/sewing" element={

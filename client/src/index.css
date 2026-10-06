@@ -64,3 +64,17 @@ button:disabled { background: #d1d5db; border-color: #9ca3af; color: #374151; cu
 .page { max-width: 960px; margin: 1.5rem auto; padding: 0 1rem; }
 .login-wrap { max-width: 440px; margin: 3rem auto; padding: 0 1rem; display: grid; gap: 1rem; }
 .field { margin-bottom: 1rem; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid #d1d5db; color: #111827; }
+th { background: #e5e7eb; }
+.table-wrap { overflow-x: auto; }
+.badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.8rem;
+  font-weight: 700; border: 1.5px solid; }
+.badge.progress { background: #fef3c7; color: #78350f; border-color: #b45309; }
+.badge.pending  { background: #dbeafe; color: #1e3a8a; border-color: #1d4ed8; }
+.badge.rejected { background: #fee2e2; color: #7f1d1d; border-color: #b91c1c; }
+.badge.verified { background: #dcfce7; color: #14532d; border-color: #15803d; }
+.row-between { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
