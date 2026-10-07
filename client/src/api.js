@@ -23,6 +23,7 @@ export async function api(path, { method = "GET", body } = {}) {
     const err = new Error(data?.error || "Request failed");
     err.status = res.status;
     err.details = data?.details; // field-level errors from Zod
+    err.reason = data?.reason;
     throw err;
   }
   return data;
