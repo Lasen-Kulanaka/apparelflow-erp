@@ -38,8 +38,13 @@ export default function Login() {
 
   return (
     <div className="login-wrap">
+      <div className="brand">
+        <h1>ApparelFlow</h1>
+        <p>Cutting Verification &amp; Sewing Queue Gate</p>
+      </div>
+      
       <form className="card" noValidate onSubmit={(ev) => { ev.preventDefault(); doLogin(email, password); }}>
-        <h1 style={{ marginTop: 0 }}>ApparelFlow Sign in</h1>
+        <h1 style={{ marginTop: 0 }}>Sign in</h1>
 
         <div className="field">
           <label htmlFor="email">Email</label>

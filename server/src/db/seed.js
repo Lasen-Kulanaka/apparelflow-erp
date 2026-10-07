@@ -5,9 +5,9 @@ import { pool } from "./pool.js";
 const DEMO_PASSWORD = "Demo@1234";
 
 const users = [
-  { email: "supervisor@apparelflow.demo", full_name: "Sam Supervisor", role: "cutting_supervisor" },
-  { email: "verifier@apparelflow.demo",   full_name: "Vera Verifier",  role: "cutting_verifier" },
-  { email: "sewing@apparelflow.demo",     full_name: "Sewa Sewing",    role: "sewing_supervisor" },
+  { email: "supervisor@apparelflow.demo", full_name: "Nimal Perera", role: "cutting_supervisor" },
+  { email: "verifier@apparelflow.demo",   full_name: "Kasun Fernando",  role: "cutting_verifier" },
+  { email: "sewing@apparelflow.demo",     full_name: "Dilini Jayasinghe",    role: "sewing_supervisor" },
 ];
 
 const recipes = [

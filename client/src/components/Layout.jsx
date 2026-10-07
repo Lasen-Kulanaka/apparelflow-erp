@@ -26,7 +26,8 @@ export default function Layout() {
           ))}
         </nav>
         <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-          <span>{user.full_name} ({user.role.replace("_", " ")})</span>
+          <span>{user.full_name}</span>
+          <span className="role-pill">{user.role.replace(/_/g, " ")}</span>
           <select aria-label="Switch demo role" value="" onChange={switchRole}>
             <option value="">Switch role (demo)…</option>
             {DEMO_USERS.filter((d) => d.role !== user.role).map((d) => (
