@@ -3,9 +3,9 @@ import { AuthProvider } from "./AuthContext";
 import Layout from "./components/Layout";
 import RequireRole from "./components/RequireRole";
 import Login from "./pages/Login";
-import Placeholder from "./pages/Placeholder";
 import Orders from "./pages/Orders";
 import Verify from "./pages/Verify";
+import Sewing from "./pages/Sewing";
 
 export default function App() {
   return (
@@ -19,7 +19,7 @@ export default function App() {
             <Route path="/verify" element={
               <RequireRole roles={["cutting_verifier"]}><Verify /></RequireRole>} />
             <Route path="/sewing" element={
-              <RequireRole roles={["sewing_supervisor"]}><Placeholder title="Sewing Queue" /></RequireRole>} />
+              <RequireRole roles={["sewing_supervisor"]}><Sewing /></RequireRole>} />
           </Route>
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
