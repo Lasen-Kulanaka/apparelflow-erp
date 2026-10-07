@@ -7,7 +7,10 @@
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
     "migrate": "node src/db/migrate.js",
-    "seed": "node src/db/seed.js"
+    "seed": "node src/db/seed.js",
+    "migrate:test": "dotenv -e .env.test -- node src/db/migrate.js",
+    "seed:test": "dotenv -e .env.test -- node src/db/seed.js",
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +26,9 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "dotenv-cli": "^11.0.0",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.3.1",
+    "vitest": "^5.0.3"
   }
 }
