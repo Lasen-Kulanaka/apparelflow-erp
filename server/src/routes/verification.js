@@ -53,7 +53,7 @@ const approveSchema = z
 const rejectSchema = z
   .object({
     note: z
-      .string({ required_error: "A rejection reason is required" })
+      .string({ error: "A rejection reason is required" })
       .trim()
       .min(1, "A rejection reason is required")
       .max(500, "Maximum 500 characters"),
