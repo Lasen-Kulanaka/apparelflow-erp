@@ -25,6 +25,7 @@ export default function VerifyCard({ order, onDone }) {
   const [noteError, setNoteError] = useState("");
   const [serverError, setServerError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState("");
 
   const flags = order.items.map((i) => ({ item: i, f: flag(i.expected_qty, inputs[i.component_id]) }));
   const hasRed = flags.some(({ f }) => f.key === "RED");
@@ -50,6 +51,24 @@ export default function VerifyCard({ order, onDone }) {
 
   function showError(err) {
     setServerError(err.reason ? `${err.message}: ${err.reason}` : err.message);
+  }
+
+  async function save() {
+    setServerError("");
+    setSaved("");
+    if (validCounts().length === 0) {
+      setServerError("Enter at least one valid whole-number count first");
+      return;
+    }
+    setBusy(true);
+    try {
+      await saveCounts();
+      setSaved("Counts saved");
+    } catch (err) {
+      showError(err);
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function approve() {
@@ -114,7 +133,10 @@ export default function VerifyCard({ order, onDone }) {
                     aria-label={`Actual count for ${item.component_name}`}
                     aria-invalid={f.key === "INVALID"}
                     value={inputs[item.component_id]}
-                    onChange={(e) => setInputs({ ...inputs, [item.component_id]: e.target.value })}
+                    onChange={(e) => {
+                      setInputs({ ...inputs, [item.component_id]: e.target.value });
+                      setSaved("");
+                    }}
                   />
                 </td>
                 <td><span className={`tl ${CLASS[f.key]}`}>{f.label}</span></td>
@@ -154,8 +176,12 @@ export default function VerifyCard({ order, onDone }) {
       </div>
 
       {serverError && <p className="error-text" role="alert">{serverError}</p>}
+      {saved && <p className="muted" role="status"><strong>{saved}</strong></p>}
 
       <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+        <button className="secondary" onClick={save} disabled={busy}>
+          Save counts
+        </button>
         <button onClick={approve} disabled={!canApprove}>
           {busy ? "Working…" : "Approve Batch"}
         </button>

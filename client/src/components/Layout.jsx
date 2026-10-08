@@ -29,7 +29,7 @@ export default function Layout() {
           <span>{user.full_name}</span>
           <span className="role-pill">{user.role.replace(/_/g, " ")}</span>
           <select aria-label="Switch demo role" value="" onChange={switchRole}>
-            <option value="">Switch role (demo)…</option>
+            <option value="">Switch role</option>
             {DEMO_USERS.filter((d) => d.role !== user.role).map((d) => (
               <option key={d.email} value={d.email}>{d.label}</option>
             ))}
