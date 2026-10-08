@@ -44,7 +44,7 @@ export default function Login() {
       </div>
       
       <form className="card" noValidate onSubmit={(ev) => { ev.preventDefault(); doLogin(email, password); }}>
-        <h1 style={{ marginTop: 0 }}>Sign in</h1>
+        <h2 style={{ marginTop: 0 }}>Sign in</h2>
 
         <div className="field">
           <label htmlFor="email">Email</label>
