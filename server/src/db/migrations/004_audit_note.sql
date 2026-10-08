@@ -1,0 +1,1 @@
+ALTER TABLE verification_logs ADD COLUMN audit_note TEXT;

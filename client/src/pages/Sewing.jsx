@@ -52,6 +52,12 @@ function BatchCard({ order, onStart, busy }) {
         {started && <><br /><strong>Sewing started:</strong> {fmt(order.sewing_started_at)}</>}
       </p>
 
+      {order.audit_note && (
+        <p>
+          <strong>Verifier note:</strong> {order.audit_note}
+        </p>
+      )}
+
       <PieceTable items={order.item_snapshot} />
 
       {!started && (

@@ -26,6 +26,7 @@ export default function VerifyCard({ order, onDone }) {
   const [serverError, setServerError] = useState("");
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState("");
+  const [approveNote, setApproveNote] = useState("");
 
   const flags = order.items.map((i) => ({ item: i, f: flag(i.expected_qty, inputs[i.component_id]) }));
   const hasRed = flags.some(({ f }) => f.key === "RED");
@@ -76,7 +77,10 @@ export default function VerifyCard({ order, onDone }) {
     setServerError("");
     try {
       await saveCounts();
-      await api(`/api/verification/orders/${order.id}/approve`, { method: "POST", body: {} });
+      await api(`/api/verification/orders/${order.id}/approve`, {
+        method: "POST",
+        body: approveNote.trim() ? { note: approveNote.trim() } : {},
+      });
       onDone();
     } catch (err) {
       showError(err);
@@ -160,6 +164,18 @@ export default function VerifyCard({ order, onDone }) {
       {!hasRed && hasBlank && (
         <p className="muted">Enter a valid count for every component to enable approval.</p>
       )}
+
+      <div className="field" style={{ marginTop: "1rem" }}>
+        <label htmlFor={`anote-${order.id}`}>Verifier audit note for sewing (optional)</label>
+        <textarea
+          id={`anote-${order.id}`}
+          rows={2}
+          value={approveNote}
+          maxLength={500}
+          placeholder="e.g. Bundles tied in 10s, 2 spare collars included"
+          onChange={(e) => setApproveNote(e.target.value)}
+        />
+      </div>
 
       <div className="field" style={{ marginTop: "1rem" }}>
         <label htmlFor={`note-${order.id}`}>Rejection reason (required to reject)</label>

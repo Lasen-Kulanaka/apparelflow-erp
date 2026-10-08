@@ -19,7 +19,8 @@ const baseSelect = `
          l.verifier_id, u.full_name AS verifier_name,
          l.timestamp AS verified_at,
          l.wastage_pct::float AS wastage_pct,
-         l.item_snapshot
+         l.item_snapshot,
+         l.audit_note
     FROM cutting_orders o
     JOIN recipes r ON r.id = o.recipe_id
     JOIN LATERAL (

@@ -43,8 +43,12 @@ const countsSchema = z
   })
   .strict();
 
-// Approve takes NO body fields. If a client sends verifier_id or wastage_pct, it's rejected.
-const approveSchema = z.object({}).strict();
+// Approve accepts ONE optional field: a note. Anything else (verifier_id, etc.) is rejected.
+const approveSchema = z
+  .object({
+    note: z.string().trim().max(500, "Maximum 500 characters").optional(),
+  })
+  .strict();
 
 const rejectSchema = z
   .object({
@@ -206,10 +210,10 @@ verificationRouter.post("/orders/:id/approve", validId, validate(approveSchema),
     );
     // verifier_id comes from the verified token. The timestamp is the DB clock.
     const log = await client.query(
-      `INSERT INTO verification_logs (order_id, verifier_id, decision, wastage_pct, item_snapshot)
-       VALUES ($1, $2, 'APPROVED', $3, $4::jsonb)
-       RETURNING id, verifier_id, decision, wastage_pct::float AS wastage_pct, timestamp`,
-      [req.orderId, req.user.id, pct, JSON.stringify(snapshotOf(items))]
+      `INSERT INTO verification_logs (order_id, verifier_id, decision, wastage_pct, item_snapshot, audit_note)
+      VALUES ($1, $2, 'APPROVED', $3, $4::jsonb, $5)
+      RETURNING id, verifier_id, decision, wastage_pct::float AS wastage_pct, audit_note, timestamp`,
+      [req.orderId, req.user.id, pct, JSON.stringify(snapshotOf(items)), req.body.note || null]
     );
 
     await client.query("COMMIT");

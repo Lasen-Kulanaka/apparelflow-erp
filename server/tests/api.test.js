@@ -197,3 +197,23 @@ describe("Test 5: unapproved orders never appear in the Sewing Queue", () => {
     expect(res.status).toBe(409);
   });
 });
+
+describe("Verifier audit note reaches the Sewing Queue", () => {
+  it("stores the optional approval note and shows it to sewing", async () => {
+    const id = await createPendingOrder();
+    await saveCounts(id, (item) => item.expected_qty);
+    const res = await approve(id, { note: "Bundles tied in 10s" });
+    expect(res.status).toBe(200);
+
+    const queue = await request(app).get("/api/sewing/queue").set(auth("sewing"));
+    const row = queue.body.orders.find((o) => o.id === id);
+    expect(row.audit_note).toBe("Bundles tied in 10s");
+  });
+
+  it("rejects an approval note longer than 500 characters", async () => {
+    const id = await createPendingOrder();
+    await saveCounts(id, (item) => item.expected_qty);
+    const res = await approve(id, { note: "x".repeat(501) });
+    expect(res.status).toBe(422);
+  });
+});
